@@ -4,9 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import com.pankel.proyectointeligenciaambiental.R
+import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
 
 @Composable
-fun MapImages(id: String, index: Int){
+fun MapImages(id: String, index: Int, salida: String?, llegada: String?){
+
+    val salidaIndex = if (salida.isNullOrEmpty()) 35 else salida.toInt()
+    val llegadaIndex = if (llegada.isNullOrEmpty()) 35 else llegada.toInt()
 
     val imageResource = when (id) {
         "01" -> R.drawable._01
@@ -23,5 +27,13 @@ fun MapImages(id: String, index: Int){
         else -> R.drawable._00
     }
 
+    val imageResource2 = when (index) {
+        salidaIndex -> R.drawable.greenflag
+        llegadaIndex -> R.drawable.redflag
+        else -> imageResource
+    }
+
+
     Image(painter = painterResource(id = imageResource), contentDescription = "Image")
+    Image(painter = painterResource(id = imageResource2), contentDescription = "Image2")
 }

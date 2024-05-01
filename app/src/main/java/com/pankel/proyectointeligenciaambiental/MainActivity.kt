@@ -13,23 +13,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.pankel.proyectointeligenciaambiental.navigation.NavManager
-import com.pankel.proyectointeligenciaambiental.state.AppState
 import com.pankel.proyectointeligenciaambiental.ui.theme.ProyectoInteligenciaAmbientalTheme
 import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
-import com.pankel.proyectointeligenciaambiental.views.AddOrderView
-import com.pankel.proyectointeligenciaambiental.views.AppView
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 
 class MainActivity : ComponentActivity() {
-
-    val appState = AppState()
-
-    private val broker = "tcp://<mqtt_broker_address>:<mqtt_broker_port>"
+    private val broker = "mqtt://192.168.48.245:1883"
     private val clientId = MqttClient.generateClientId()
-    private val topic = "example/topic"
+    private val topic = "map"
 
     private lateinit var client: MqttClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     /*sendAndShowMessage(receivedMessage = receivedMessage) { message ->
                         sendMessage(message)
                     }*/
-                    NavManager(appState, appViewModel = AppViewModel)
+                    NavManager(appViewModel = AppViewModel)
                 }
             }
         }

@@ -6,26 +6,38 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.pankel.proyectointeligenciaambiental.state.AppState
+import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
 
 @Composable
-fun Map(appState: AppState) {
-    appState.mapaCode = "0202000105030705000200041109060110031000000200080101100110000106010701"
+fun Map(appViewModel: AppViewModel) {
+    appViewModel.mapaCode.value = "0202000105030705000200041109060110031000000200080101100110000106010701"
 
-    val list = appState.mapaCode.chunked(2)
-    appState.listaIdMapa = list.toMutableList()
+    val list = appViewModel.mapaCode.value.chunked(2)
+    appViewModel.listaIdMapa.clear()
+    appViewModel.listaIdMapa.addAll(list)
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(5),
         modifier = Modifier.fillMaxWidth(),
     ) {
-        items(appState.listaIdMapa.size) { index ->
+        items(appViewModel.listaIdMapa.size) { index ->
             Box(
             ) {
-                MapImages(
-                    appState.listaIdMapa[index],
-                    index
-                )
+                if (appViewModel.listaSalidasLlegadas.isNotEmpty()){
+                    MapImages(
+                        appViewModel.listaIdMapa[index],
+                        index,
+                        appViewModel.listaSalidasLlegadas[0].salida,
+                        appViewModel.listaSalidasLlegadas[0].llegada
+                    )
+                }else{
+                    MapImages(
+                        appViewModel.listaIdMapa[index],
+                        index,
+                        null,
+                        null
+                    )
+                }
             }
         }
     }

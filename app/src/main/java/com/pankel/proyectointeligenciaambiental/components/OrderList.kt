@@ -19,10 +19,14 @@ import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
 
 @Composable
 fun OrderList(appViewModel: AppViewModel) {
-   LazyColumn(modifier = Modifier.padding(10.dp)) {
-      itemsIndexed(appViewModel.listaSalidasLlegadas) { index, item ->
-         SalidaLlegadaItem(item, isFirstItem = index == 0)
+   if(appViewModel.listaSalidasLlegadas.isNotEmpty()){
+      LazyColumn(modifier = Modifier.padding(10.dp)) {
+         itemsIndexed(appViewModel.listaSalidasLlegadas) { index, item ->
+            SalidaLlegadaItem(item, isFirstItem = index == 0)
+         }
       }
+   } else {
+      Text(text = "Actualmente no existen pedidos activos", color = Color.Gray)
    }
 }
 
