@@ -5,8 +5,12 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.pankel.proyectointeligenciaambiental.model.SalidaLlegada
+import com.pankel.proyectointeligenciaambiental.repository.DataRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AppViewModel: ViewModel() {
+@HiltViewModel
+class AppViewModel @Inject constructor(private val repo: DataRepository): ViewModel() {
     private val _salida = mutableStateOf("")
     var salida: MutableState<String> = _salida
     private val _llegada = mutableStateOf("")
