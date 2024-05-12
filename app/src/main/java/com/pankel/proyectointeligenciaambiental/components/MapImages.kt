@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import com.pankel.proyectointeligenciaambiental.R
-import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
 
 @Composable
 fun MapImages(id: String, index: Int, salida: String?, llegada: String?){

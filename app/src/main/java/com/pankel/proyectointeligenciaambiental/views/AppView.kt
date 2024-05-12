@@ -3,15 +3,11 @@ package com.pankel.proyectointeligenciaambiental.views
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -21,8 +17,8 @@ import com.pankel.proyectointeligenciaambiental.components.Map
 import com.pankel.proyectointeligenciaambiental.components.OrderList
 import com.pankel.proyectointeligenciaambiental.ui.theme.background
 import com.pankel.proyectointeligenciaambiental.ui.theme.background2
+import com.pankel.proyectointeligenciaambiental.ui.theme.buttonColor
 import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
-import kotlinx.coroutines.delay
 
 @Composable
 fun AppView(navController: NavController, appViewModel: AppViewModel) {
@@ -124,7 +120,7 @@ fun AlertDialogExample(
                     onConfirmation()
                 }
             ) {
-                Text("De acuerdo")
+                Text("De acuerdo", color = buttonColor)
             }
         }
     )

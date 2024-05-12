@@ -35,9 +35,10 @@ fun AddOrderView(navController: NavController, appViewModel: AppViewModel) {
                 .background(background)
                 .fillMaxSize()
                 .padding(paddingValues),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopCenter
         ) {
             Column(
+                modifier = Modifier.padding(top = 100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 customTextField(
