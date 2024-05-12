@@ -1,12 +1,15 @@
 package com.pankel.proyectointeligenciaambiental.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pankel.proyectointeligenciaambiental.model.SalidaLlegada
 import com.pankel.proyectointeligenciaambiental.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,7 +20,7 @@ class AppViewModel @Inject constructor(private val repo: DataRepository): ViewMo
     var llegada: MutableState<String> = _llegada
 
     private val _listaSalidasLlegadas = mutableStateListOf<SalidaLlegada>()
-    var listaSalidasLlegadas: List<SalidaLlegada> = _listaSalidasLlegadas
+    var listaSalidasLlegadas: MutableList<SalidaLlegada> = _listaSalidasLlegadas
 
     private val _mapaCode = mutableStateOf("")
     var mapaCode: MutableState<String> = _mapaCode
@@ -26,16 +29,32 @@ class AppViewModel @Inject constructor(private val repo: DataRepository): ViewMo
     var listaIdMapa: MutableList<String> = _listaIdMapa
 
     init {
-        _listaSalidasLlegadas.add(SalidaLlegada("10", "23"))
-        _listaSalidasLlegadas.add(SalidaLlegada("17", "09"))
-        _listaSalidasLlegadas.add(SalidaLlegada("04", "02"))
+        fetchData()
     }
 
-    fun agregarSalidaLlegada(salida: String, llegada: String){
-        _listaSalidasLlegadas.add(SalidaLlegada(salida, llegada))
+    private fun fetchData() {
+        viewModelScope.launch {
+            try {
+                val result = repo.getData()
+                _mapaCode.value = result ?: ""
+            } catch (e: Exception) {
+                Log.e("TestViewModel", "Error al obtener datos: ${e.message}", e)
+            }
+        }
     }
 
-    fun eliminarSalidaLlegada(){
-        _listaSalidasLlegadas.removeFirst()
+    fun enviarSalidaLlegada(salida: String, llegada: String) {
+        val salidaLlegada = SalidaLlegada(salida, llegada)
+        viewModelScope.launch {
+            try {
+                repo.sendData(salidaLlegada)
+                salidaLlegada.enviado = true
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    fun eliminarSalidaLlegada(salidaLlegada: SalidaLlegada) {
+        _listaSalidasLlegadas.remove(salidaLlegada)
     }
 }

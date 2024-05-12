@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.pankel.proyectointeligenciaambiental.components.CustomTopAppBar
 import com.pankel.proyectointeligenciaambiental.components.customTextField
+import com.pankel.proyectointeligenciaambiental.model.SalidaLlegada
 import com.pankel.proyectointeligenciaambiental.ui.theme.background
 import com.pankel.proyectointeligenciaambiental.ui.theme.buttonColor
 import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
@@ -37,7 +38,6 @@ fun AddOrderView(navController: NavController, appViewModel: AppViewModel) {
             contentAlignment = Alignment.Center
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 customTextField(
@@ -52,15 +52,22 @@ fun AddOrderView(navController: NavController, appViewModel: AppViewModel) {
                 )
                 Button(
                     onClick = {
-                        appViewModel.agregarSalidaLlegada(appViewModel.salida.value, appViewModel.llegada.value)
+                        appViewModel.listaSalidasLlegadas.add(
+                            SalidaLlegada(
+                                appViewModel.salida.value,
+                                appViewModel.llegada.value
+                            )
+                        )
+                        appViewModel.salida.value = ""
+                        appViewModel.llegada.value = ""
                         navController.navigate("AppView")
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = buttonColor,
                     ),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.width(250.dp).padding(top = 10.dp)
                 ) {
-                    Text(text = "Confirmar Pedido", fontSize = 24.sp, color = Color.Black)
+                    Text(text = "Confirmar Pedido", fontSize = 20.sp, color = Color.Black)
                 }
             }
         }

@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import com.pankel.proyectointeligenciaambiental.navigation.NavManager
 import com.pankel.proyectointeligenciaambiental.ui.theme.ProyectoInteligenciaAmbientalTheme
 import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
-import com.pankel.proyectointeligenciaambiental.viewModel.TestViewModel
-import com.pankel.proyectointeligenciaambiental.views.TestView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +20,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val AppViewModel: AppViewModel by viewModels()
-            //val TestViewModel: TestViewModel by viewModels()
 
             ProyectoInteligenciaAmbientalTheme {
                 Surface(
@@ -30,7 +27,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavManager(AppViewModel)
-                    //TestView(TestViewModel)
                 }
             }
         }

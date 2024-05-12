@@ -28,15 +28,6 @@ import kotlinx.coroutines.delay
 fun AppView(navController: NavController, appViewModel: AppViewModel) {
 
     var showAlert by remember { mutableStateOf(false) }
-    var updateKey by remember { mutableStateOf(0) }
-
-    LaunchedEffect(updateKey){
-        delay(10000)
-        if (appViewModel.listaSalidasLlegadas.isNotEmpty()) {
-            appViewModel.eliminarSalidaLlegada()
-        }
-        updateKey++
-    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -122,14 +113,6 @@ fun AlertDialogExample(
                             modifier = Modifier.size(85.dp)
                         )
                         Text(text = "Llegada del pedido")
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.robot),
-                            contentDescription = "Image",
-                            modifier = Modifier.size(85.dp)
-                        )
-                        Text(text = "Robot")
                     }
                 }
             }

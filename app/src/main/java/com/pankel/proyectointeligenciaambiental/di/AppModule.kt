@@ -2,7 +2,6 @@ package com.pankel.proyectointeligenciaambiental.di
 
 import com.pankel.proyectointeligenciaambiental.data.DataApi
 import com.pankel.proyectointeligenciaambiental.util.Constants
-import com.pankel.proyectointeligenciaambiental.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
