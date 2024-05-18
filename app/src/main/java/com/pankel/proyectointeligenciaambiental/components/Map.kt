@@ -10,12 +10,6 @@ import com.pankel.proyectointeligenciaambiental.viewModel.AppViewModel
 
 @Composable
 fun Map(appViewModel: AppViewModel) {
-    appViewModel.mapaCode.value = "0202000105030705000200041109060110031000000200080101100110000106010701"
-
-    val list = appViewModel.mapaCode.value.chunked(2)
-    appViewModel.listaIdMapa.clear()
-    appViewModel.listaIdMapa.addAll(list)
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(5),
         modifier = Modifier.fillMaxWidth(),
@@ -28,14 +22,16 @@ fun Map(appViewModel: AppViewModel) {
                         appViewModel.listaIdMapa[index],
                         index,
                         appViewModel.listaSalidasLlegadas[0].salida,
-                        appViewModel.listaSalidasLlegadas[0].llegada
+                        appViewModel.listaSalidasLlegadas[0].llegada,
+                        appViewModel.posRobot.value
                     )
                 }else{
                     MapImages(
                         appViewModel.listaIdMapa[index],
                         index,
                         null,
-                        null
+                        null,
+                        appViewModel.posRobot.value
                     )
                 }
             }

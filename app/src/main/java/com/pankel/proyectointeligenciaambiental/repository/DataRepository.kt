@@ -1,13 +1,28 @@
 package com.pankel.proyectointeligenciaambiental.repository
 
 import com.pankel.proyectointeligenciaambiental.data.DataApi
+import com.pankel.proyectointeligenciaambiental.model.MapaCode
+import com.pankel.proyectointeligenciaambiental.model.PosRobot
 import com.pankel.proyectointeligenciaambiental.model.SalidaLlegada
 import javax.inject.Inject
 
 class DataRepository @Inject constructor(private val dataApi: DataApi) {
-    suspend fun getData(): String? {
+    suspend fun getMapaCode(): MapaCode? {
         return try {
-            val response = dataApi.getData()
+            val response = dataApi.getMapaCode()
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                throw Exception("Error al obtener los datos: ${response.code()} - ${response.message()}")
+            }
+        } catch (e: Exception) {
+            throw Exception("Error de red al obtener los datos: ${e.message}")
+        }
+    }
+
+    suspend fun getPosRobot(): PosRobot? {
+        return try {
+            val response = dataApi.getPosRobot()
             if (response.isSuccessful) {
                 response.body()
             } else {

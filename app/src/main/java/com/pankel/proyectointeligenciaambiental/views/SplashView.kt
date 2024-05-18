@@ -18,7 +18,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashView(navController: NavController){
     LaunchedEffect(key1 = true){
-        delay(5000)
+        delay(3000)
         navController.popBackStack()
         navController.navigate("AppView")
     }
@@ -36,7 +36,7 @@ fun Splash(){
                 painter = painterResource(id = com.pankel.proyectointeligenciaambiental.R.drawable.delivery),
                 contentDescription = "DeliveryLogo",
             )
-            Text(modifier = Modifier.padding(20.dp), text = "Proyecto Inteligencia Ambiental", fontSize = 18.sp)
+            Text(modifier = Modifier.padding(20.dp), text = "Urban Delivery", fontSize = 32.sp)
         }
     }
 }

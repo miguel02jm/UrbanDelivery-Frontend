@@ -110,6 +110,14 @@ fun AlertDialogExample(
                         )
                         Text(text = "Llegada del pedido")
                     }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = R.drawable.robot),
+                            contentDescription = "Image",
+                            modifier = Modifier.size(85.dp)
+                        )
+                        Text(text = "Posición del robot")
+                    }
                 }
             }
         },

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.pankel.proyectointeligenciaambiental.model.SalidaLlegada
 import com.pankel.proyectointeligenciaambiental.repository.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,17 +29,40 @@ class AppViewModel @Inject constructor(private val repo: DataRepository): ViewMo
     private val _listaIdMapa = mutableStateListOf<String>()
     var listaIdMapa: MutableList<String> = _listaIdMapa
 
+    private val _posRobot = mutableStateOf("")
+    var posRobot: MutableState<String> = _posRobot
+
     init {
-        fetchData()
+        fetchMapaCode()
+        fetchCodeRobot()
     }
 
-    private fun fetchData() {
+    private fun fetchMapaCode() {
         viewModelScope.launch {
             try {
-                val result = repo.getData()
-                _mapaCode.value = result ?: ""
+                val result = repo.getMapaCode()
+                _mapaCode.value = result?.mapaCode.toString()
+                val list = mapaCode.value.chunked(2)
+                listaIdMapa.clear()
+                listaIdMapa.addAll(list)
             } catch (e: Exception) {
-                Log.e("TestViewModel", "Error al obtener datos: ${e.message}", e)
+                Log.e("AppViewModel", "Error al obtener datos: ${e.message}", e)
+            }
+        }
+    }
+
+    private fun fetchCodeRobot() {
+        viewModelScope.launch {
+            viewModelScope.launch {
+                while (true) {
+                    try {
+                        val result = repo.getPosRobot()
+                        _posRobot.value = result?.posRobot.toString()
+                    } catch (e: Exception) {
+                        Log.e("AppViewModel", "Error al obtener datos: ${e.message}", e)
+                    }
+                    delay(2500)
+                }
             }
         }
     }
@@ -50,6 +74,7 @@ class AppViewModel @Inject constructor(private val repo: DataRepository): ViewMo
                 repo.sendData(salidaLlegada)
                 salidaLlegada.enviado = true
             } catch (e: Exception) {
+                Log.e("AppViewModel", "Error al enviar los datos: ${e.message}", e)
             }
         }
     }
